@@ -1,7 +1,7 @@
 # Langchain Expermients
 This repo is a personal workspace where I experiment with LangChain, LLMs, and AI pipelines.
 
-AI behavior fascinates me. Next focus will be AI vision and recognition for autonomous robots.
+AI behavior fascinates me. Next focus will be on AI vision and recognition for autonomous robots.
 
 # This repo is updated frequently with:
 
