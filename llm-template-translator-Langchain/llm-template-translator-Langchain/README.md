@@ -2,7 +2,7 @@
 
 This is a small translator project built using *langchain* to explore how prompt templates work.
 
-Instead of hardcoding translation logic, the behavio is defined using a *prompt template*.
+Instead of hardcoding translation logic, the behavior is defined using a *prompt template*.
 The same template can be reused for different languages and input just by changing variables.
 
 
