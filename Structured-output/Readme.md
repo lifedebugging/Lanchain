@@ -17,6 +17,53 @@ The question is which one should you use?
 Well, that depends on usecases ofcourse the `code2.py` is more reliable because it has well defined a class/function for the strucutred output.
 Prompt is fine for experiment but you will be using something like a Template or Pydantic framework for Custom models where you need the output in specific way.
 
-I will be updating this folder with more ways to achieving the same result. 
 
-Stay tuned!
+# 9/2/26
+
+After experimenting BaseModel and sturucutred output I realiased that AI models love to guess. 
+
+Look at `BaseModel-experiment.py`
+
+There are few changes:
+
+Instead of One, there are two Classes and a dynamic input text so knock yourself out and try the prompt.
+
+It guesses some things like Car and food, while the name and age is must given as input, ofcourse you can choose not to and see what happens.
+There is a `ValueError` at work in age `Field`
+
+Below are the inputs and outputs of the  `BaseModel-experiment.py`
+
+Input :  `I like fast cars and non spicy food the name is Sam turned 21 this year and age for you to guess.`
+
+(ofcourse it's not me)
+
+Output : 
+
+```
+Name : Sam
+Age : 21
+gender : Male
+tone : Casual
+car : BMW M3
+food : Aloo Paratha
+
+```
+
+According to what I was expecting the car is pretty darn accurate I like BMW M3 infact I love it and the food as well.
+However I have seen the food were either "Aloo Paratha" or "Paneer Butter Masala" for the input  `non spicy food`.
+
+That said what I know so far is:
+1. LLMs reflect majority patterns.
+2. “Common” beats “creative” unless you force diversity.
+
+Try this prompt:
+
+`“Guess a food an Indian person might like, but avoid common Indian dishes.”`
+
+You’ll see it struggle.
+
+
+
+
+
+
