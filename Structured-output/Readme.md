@@ -63,6 +63,27 @@ Try this prompt:
 You’ll see it struggle.
 
 
+10/2/26
+
+`advanced_pydantic.py`
+
+More sophisticated schemas with nested objects, enums.
+
+Using nested models : Defining `Address` and using it inside `Company`
+
+Using Literal types for **enum** like constraints
+
+Python validate types automatically
+
+Accessing nested data via dot notation like `result.headquarters.city`
+
+From this point onwards I will be using Pydantic BaseModel for the strucutred_output because reliable data is important.
+
+Ofcourse, this is not the end I have few mini projects in mind I will be posting soon.
+
+Thankyou.
+
+
 
 
 
