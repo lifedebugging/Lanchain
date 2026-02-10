@@ -63,9 +63,18 @@ Try this prompt:
 You’ll see it struggle.
 
 
-10/2/26
+# 10/2/26
 
 `advanced_pydantic.py`
+
+Output:
+```
+Company : Microsoft Corporation
+Industry : Technologia
+Employees_count : 220000
+Location : One Microsoft Way, Redmond, USA
+Public : True
+```
 
 More sophisticated schemas with nested objects, enums.
 
