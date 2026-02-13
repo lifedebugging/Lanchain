@@ -33,3 +33,5 @@ Query : what's the weather in Tokyo?, use get_weather tool to answer
 Result of the capital of France : 
 Weather in Tokyo : 72 degree, sunny
 ```
+
+Lesson: Small models (20b) struggle with multi-tool routing. Use larger models (70b) for complex logic.
