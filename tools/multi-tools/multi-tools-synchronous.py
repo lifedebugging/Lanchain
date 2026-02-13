@@ -51,7 +51,13 @@ def main():
         if response.tool_calls:
             print(f"Query: {query}")
             print(f"  Tool: {response.tool_calls[0]['name']}")
-            print()
+            selected_tools = {
+                "calculator" : calculator,   
+                "search" : search,
+                "get_weather" : get_weather
+            }[tool_call["name"]] 
+            results = selected_tools.invoke(tool_call['arg'])
+            print(result)
 
 if __name__ == "__main__":
     main()
