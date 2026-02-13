@@ -20,4 +20,16 @@ Slept for 1 second, in the old code, 1 second + 1 second + 1 second = 3 seconds.
 
 In the new code, the 1 second happens simultaneously.
 
+Output of asynchronous multi tool:
 
+```
+Query : what is 353*464-353, use calculator tool to solve?
+ Tool : calculator
+Query : what is the capital of France?, use search tool to answer
+ Tool : search
+Query : what's the weather in Tokyo?, use get_weather tool to answer
+ Tool : get_weather
+163439
+Result of the capital of France : 
+Weather in Tokyo : 72 degree, sunny
+```
