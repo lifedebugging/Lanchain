@@ -32,24 +32,17 @@ def main():
     )
 
     history = [HumanMessage(content ="what is 25*56?")]
-    # First Invoke
+
     response = agent.invoke({
         "messages" : history
     })
-    # Grab the Agent's reply (an AIMessage object) and ADD it to history
-    # This keeps the conversation going
     
-    history.append(response["messages"][-1])  #add agent answer's to history
-    #[-1]: Python's special syntax for "The Last Item." 
-    #This line grabs the most recent message (the Agent's answer) from the history
-    
+    history.append(response["messages"][-1])  
     print(f"Agent: {response["messages"][-1].content}")
-
-    # 4. Add the NEW user question to history
+    
     follow_up = "What was the result I just calculated?"
     history.append(follow_up)
 
-    #Invoke with the FULL, CLEAN history
     response2 = agent.invoke({
         "messages" : history
     })
