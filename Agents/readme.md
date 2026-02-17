@@ -16,11 +16,13 @@ An Agent is LLM in steroids. An agent is an LLM impowered with tools.
 To understand what that means, here's the anology:
 
 > Tony Stark (Standard LLM): He is genius, he knows everything, he can solve math problems, write poetry about his assitant and answer almost any question. But he can't fly because he's just a man.
+
 > Iron Man (Agent with tools): Tony Stark + The suit(tools) now he can fly. fire missiles and talk to Jarvis from anywhere like making an external  connection using his suit(tools).
 
 In short, what makes an Agent better from Standard LLM is it's *ability to use tools* which allow it to access real-time data and take actions, while standard LLMs are limited to their training data.
 
  Standard LLM: Input -> Process -> Output. (One shot).
+ 
  Agent (With Tools): Input -> Think -> Act -> Output.
 
  
