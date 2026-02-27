@@ -12,12 +12,13 @@ we pulling server from `mcp_server_url`, creating client, fetching tools from th
 
 Well it's not now let's dive deeper about what is MCP anyway?
 
-MCP stands for *Model Context Protocol*, this is where you use the real tool in your model or agent, basically MCP is a stndardized way for AI agents to
-connect tools, you can't connect to external services without MCP I bet.
+MCP stands for *Model Context Protocol*, this is where you use the real tool in your model or agent, basically MCP is a stndardized way for AI agents to connect tools.
 
 Why MCP though?
 
-Well think of MCP like a translator or a middle-man who can talk to any tools written in any language. Yes you heard me right, you can write the *server* side of the 
+     Before MCP, connecting to external services was a Wild West of custom wrappers and incompatible JSON schemas. MCP standardizes all of that.
+
+Think of MCP like a translator or a middle-man who can talk to any tools written in any language. Yes you heard me right, you can write the *server* side of the 
 tools in **Java** and I can write *client* side in Python.
 
 let's recall: 
