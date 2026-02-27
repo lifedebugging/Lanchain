@@ -16,7 +16,8 @@ MCP stands for *Model Context Protocol*, this is where you use the real tool in 
 
 Why MCP though?
 
-     Before MCP, connecting to external services was a Wild West of custom wrappers and incompatible JSON schemas. MCP standardizes all of that.
+     Before MCP, connecting to external services was a Wild West of custom wrappers and incompatible JSON schemas. 
+     MCP standardizes all of that.
 
 Think of MCP like a translator or a middle-man who can talk to any tools written in any language. Yes you heard me right, you can write the *server* side of the 
 tools in **Java** and I can write *client* side in Python.
