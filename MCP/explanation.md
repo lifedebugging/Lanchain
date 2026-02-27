@@ -83,3 +83,9 @@ Now both transports can:
         ✅ Be used in production (choice depends on architecture and needs)
 
 
+# Note
+
+We will be using VS code for stdio transport since it requires to write server script which has to be saved and run as `.py`.
+
+Using Jupyter is bad for fetching files in low level pipline because it does not allow it, highly likely that you will get `fileno` error.
+
