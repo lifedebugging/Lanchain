@@ -36,6 +36,7 @@ Now, MCP has two way to handle tool calls or **transport**
 
 *refrence* : Microsoft github post langchain for beginners.
 
+Let's talk about the *code*.
 
 What you're seeing in `firstmcpclient.py` is HTTP transport approach, server lives on the internet we fetch the URL and pass it to the config.
 
