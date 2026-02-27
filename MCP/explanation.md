@@ -19,8 +19,7 @@ Why MCP though?
      Before MCP, connecting to external services was a Wild West of custom wrappers and incompatible JSON schemas. 
      MCP standardizes all of that.
 
-Think of MCP like a translator or a middle-man who can talk to any tools written in any language. Yes you heard me right, you can write the *server* side of the 
-tools in **Java** and I can write *client* side in Python.
+Think of MCP like a translator or a middle-man who can talk to any tools written in any language. Yes you heard me right, you can write the *server* side of the tools in **Java** and I can write *client* side in Python.
 
 let's recall: 
 
@@ -34,7 +33,9 @@ Now, MCP has two way to handle tool calls or **transport**
 2. stdio Transport
    
 <img width="1536" height="778" alt="image" src="https://github.com/user-attachments/assets/7dc73bff-5109-4f03-abd9-e8c91d0d0277" />
+
 *refrence* : Microsoft github post langchain for beginners.
+
 
 What you're seeing in `firstmcpclient.py` is HTTP transport approach, server lives on the internet we fetch the URL and pass it to the config.
 
