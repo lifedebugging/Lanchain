@@ -40,3 +40,5 @@ async def main():
 if __name__ == "__main__":
     await main()
 
+
+# This client does nothing note that it will print an error message and written in python. Thakyou.
