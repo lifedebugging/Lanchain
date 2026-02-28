@@ -104,9 +104,10 @@ There are two ways to create server using MCP.
 1. Standard way
 2. FastMCP
 
-         Standard way allow you to configuration everything, about how server talks to client and make connection you can set up resources and authentication which you can do in FastMCP as well.
-   
-                                          WHere as FastMCP is what get's used for creating instant server's like in seconds or minutes. FastMCP get's imported from mcp.server.fastmcp and you'd be able to create MCP server just like that.
+         Standard way allow you to configuration everything, about how server talks to client and make connection you can set up
+         resources and authentication which you can do in FastMCP as well.
+                WHere as FastMCP is what get's used for creating instant server's like in seconds or minutes.
+         FastMCP get's imported from mcp.server.fastmcp and you'd be able to create MCP server just like that.
 
 Things worth taking note:
 Here we are using `@mcp.tool()` isntead of `tool()` from `langchain.tools` and creating rest of rest tool is pretty much the same. 
