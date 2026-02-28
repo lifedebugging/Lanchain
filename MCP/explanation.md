@@ -93,3 +93,23 @@ We will be using VS code for stdio transport since it requires to write server s
 
 Using Jupyter is bad for fetching files in low level pipline because it does not allow it, highly likely that you will get `fileno` error.
 
+# 2/28/26
+
+I apologize to myself for writing late explanation, but here goes nothing. I said we will talk about *stdio* transport in more detail and here we are
+look at `first_mcpclient.py` and `first_mcpserver.py` we have our own mcp tool running as a sub process of main program in CPU.
+
+Now the client side has only major changes, so I m not going to go through all the details, read above explanation of *stdio* approach you will get a clear picture. We will be focusing more on server side.
+
+There are two ways to create server using MCP.
+1. Standard way
+2. FastMCP
+
+         Standard way allow you to configuration everything, about how server talks to client and make connection you can set up resources and authentication which you can do in FastMCP as well.
+   
+                                          WHere as FastMCP is what get's used for creating instant server's like in seconds or minutes. FastMCP get's imported from mcp.server.fastmcp and you'd be able to create MCP server just like that.
+
+Things worth taking note:
+Here we are using `@mcp.tool()` isntead of `tool()` from `langchain.tools` and creating rest of rest tool is pretty much the same. 
+If you don't know what I am talking a bout check out `tools` folder of my repo.
+
+
