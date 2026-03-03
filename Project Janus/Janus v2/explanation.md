@@ -29,5 +29,25 @@ Note : I am using *stdio* transport approach in Janus and probably it will be li
 # Standard Method
 
 Creating MCP tool require's *client* - *server* method. In which `Janus_v2.py` is the client, client stays where your main model is defined.
+Server can be anywhere in your system since we're working with *stdio* transport basically it's the server stays locally in your computer instead of internet. 
+
+# The Twist
+
+`janus-server.py` is our server where the mcp tools has been defined. Now here's the twist instead of using `FastMCP` library, I m creating tool with standard method, writing all the configuration by myself, why? Well it's not that I am ~~Masochist~~ who love to deal with syntax errors, 
+It's because Janus is all about writng Native programming.
+
+# The Reason
+
+*Janus* is a project where I am going to write my own ways to do things the same way Langchain libraries handle model configuration, so far I a have:
+1. My own multi model decision router.
+2. My own mcp standard server that contain single tool for now.
+
+*Janus v2* does not have very drastic changes yet but it finally has hand's now and it's not a just a useless bot anymore.
+
+I m going to explain how `janus-server` work in great detail in MCP folder, so look forward to it.
+
+# What's next?
+
+*Janus v3* is already in production, it will have drastic changes. look forward to that as well.
 
 
