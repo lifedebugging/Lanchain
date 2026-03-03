@@ -39,8 +39,6 @@ Creating MCP tool require's *client* - *server* method. In which `Janus_v2.py` i
 Server can be anywhere in your system since we're working with *stdio* transport basically it's the server stays locally in your computer instead of internet. 
 
 # The Twist
-Here is where I deviate from the tutorials.
-
 Most people use the FastMCP library because it does the heavy lifting—handling sessions and handshakes automatically. Janus v2 does not use FastMCP.
 
 Instead, I have created my own server using **Standard Low-Level Method**, I wrote the JSON-RPC configurations and the handshake logic by hand. 
