@@ -38,7 +38,7 @@ It's because Janus is all about writng Native programming.
 
 # The Reason
 
-*Janus* is a project where I am going to write my own ways to do things the same way Langchain libraries handle model configuration, so far I a have:
+*Janus* is a project where I am going to write my own ways to do things the same way Langchain libraries handle model configuration, so far I have:
 1. My own multi model decision router.
 2. My own mcp standard server that contain single tool for now.
 
