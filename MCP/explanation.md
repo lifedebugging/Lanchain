@@ -123,5 +123,23 @@ real power of MCP. Having more than one server in your LLM. MCP allow you to fet
 
 Now go ahead and open `multiserver-mcp.py` in new window and compare it to `first_httpclient.py`. There's not much different in code except you will another block of code inside `client`.
 
+```
+client = MultiServerMCPClient({
+        "localcalculator" : {
+            "transport" : "stdio",
+            "command" : "python",
+            "args" : [str(Path("D:/Documents/first_mcpserver.py"))],   #Local math server
+        },
+        "context7" : {
+            "transport" : "streamable_http",
+            "url": "https://mcp.context7.com/mcp"  #Remote docs server
+            },
 
+    })
+```
+This is all the difference it has. we're using both local math server and **remote docs server** from **Context7**. This is all just to demonstrate that MCP true capability is much more. It is a go to way to use Local server's or remote server as many as you want.
+
+Note : that if you define too many server's you might as well write a **async** function for it to communicate concurrently.
+
+Note :
 
