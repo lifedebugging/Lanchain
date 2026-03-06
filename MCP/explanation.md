@@ -114,6 +114,25 @@ Here we are using `@mcp.tool()` instead of `tool()` from `langchain.tools` and c
 If you don't know what I am talking a bout check out `tools` folder of my repo.
 
 # 3/6/26
+# Streamable HTTP transport
+
+Even though I said we will be focusing more on **stdio** transport but that doesn't mean we ignore the *http* transport method.
+
+This is what http client looks like :
+
+         client = MultiServerMCPClient({
+         "context7" : {
+            "transport" : "streamable_http",
+            "url": "https://mcp.context7.com/mcp"  #Remote docs server
+            },
+          })
+
+Unlike **stdio** method we don't have parameter's like `command` and `args` instead define `url` and that's it, you don't believe me? 
+
+Copy-paste `firsthttpclient.py` and see for yourself. Well don't forget to read the whole thing though, understand every single line of code is  90% of engineering.
+
+Anyways the rest is about `agent` defining and `invoking` the agent with query.
+
 # Multi-server MCP
 
 This one is gonna be short trust me or don't. 
@@ -140,6 +159,3 @@ client = MultiServerMCPClient({
 This is all the difference it has. we're using both local math server and **remote docs server** from **Context7**. This is all just to demonstrate that MCP true capability is much more. It is a go to way to use Local server's or remote server as many as you want.
 
 Note : that if you define too many server's you might as well write a **async** function for it to communicate concurrently.
-
-Note :
-
