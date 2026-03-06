@@ -110,7 +110,18 @@ There are two ways to create server using MCP.
          FastMCP get's imported from mcp.server.fastmcp and you'd be able to create MCP server just like that.
 
 Things worth taking note:
-Here we are using `@mcp.tool()` isntead of `tool()` from `langchain.tools` and creating rest of rest tool is pretty much the same. 
+Here we are using `@mcp.tool()` instead of `tool()` from `langchain.tools` and creating rest of rest tool is pretty much the same. 
 If you don't know what I am talking a bout check out `tools` folder of my repo.
+
+# 3/6/26
+# Multi-server MCP
+
+This one is gonna be short trust me or don't. 
+
+**Multi server MCP** is exactly what it sound, it's about the
+real power of MCP. Having more than one server in your LLM. MCP allow you to fetch tools from more than one servers, regardless of the transporte you're using **Stdio** and **streamable http**.
+
+Now go ahead and open `multiserver-mcp.py` in new window and compare it to `first_httpclient.py`. There's not much different in code except you will another block of code inside `client`.
+
 
 
