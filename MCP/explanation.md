@@ -158,4 +158,6 @@ client = MultiServerMCPClient({
 ```
 This is all the difference it has. we're using both local math server and **remote docs server** from **Context7**. This is all just to demonstrate that MCP true capability is much more. It is a go to way to use Local server's or remote server as many as you want.
 
-Note : that if you define too many server's you might as well write a **async** function for it to communicate concurrently.
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/3b95ffd3-04f9-4f76-bfd5-9f87edc8883f" />
+
+
