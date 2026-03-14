@@ -52,7 +52,7 @@ But hey, I got your back here's the deal. If you want control over the port, you
                        
 # P.S.
 
- Don't get too excited just yet we're only gettind started.
+ Don't get too excited just yet because we're only gettind started.
  
 
 
