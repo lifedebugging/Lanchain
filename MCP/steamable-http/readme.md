@@ -12,6 +12,9 @@ custom server with **streamable-http** transport is easy as creating it with **s
 **Centralized Tools for Teams** : When you going to work in big teams you don't everyone to install a database-cleaning tool locally via stdio.Instead your company may host one MCP server on an internal server.
 **Cross Plateform** : `stdio` requires the client to be on the same machine as the server, not so good where as `streamable-http` allows a mobile app that you can communicate via web.
 
+# TLDR ; 
+ With streamable-http, your tools aren't trapped on your hard drive. 
+
 
 
 # Code
@@ -32,10 +35,24 @@ At the very end you define the method of transport to be used in your custom ser
 Well, you already know the client side since I m running it locally. It is running in port *8000*.
 You just slap the url and boom it works.
 
- The only thing that bothering me is I don't have a **SSE port** control.
+# SSE port??
 
- As soon as I learn anything about it you will get an update. 
+ The only thing that was bothering me is I don't have a **SSE port** control.
 
- Don't forget this is just the begining!
+But hey, I got your back here's the deal. If you want control over the port, you usually don't use mcp.run. Instead, you integrate the MCP server into a standard web framework like FastAPI or Starlette.
+
+                  # Instead of mcp.run, you'd do something like:
+                  import uvicorn
+                  from mcp.server.fastapi import MCPRouter
+
+                  # ... define your mcp app ...
+
+                  if __name__ == "__main__":
+                       uvicorn.run(app, host="0.0.0.0", port=8080) # Here is your port control
+                       
+# P.S.
+
+ Don't get too excited just yet we're only gettind started.
+ 
 
 
