@@ -4,13 +4,15 @@ This is interesting so far I thought that creating custom server is all about **
 custom server with **streamable-http** transport is easy as creating it with **stdio** transport.
 
 # Points to note:
-1. **Stdio** server is still most safe since you know it's running as a sub process.
-2.  **stdio** is fast because there's no delay in client-server communication.
-3.  **stdio** more reliable because if internet crashes and you go offline that's it for your custom server.
+1. **Security** : `stdio` server is still most safe since you know it's running as a sub process.
+2.  **speed** : `stdio` is fast because there's no delay in client-server communication.
+3.  **reliability** :  ` stdio` more reliable because if internet crashes and you go offline that's it for your custom server.
 
 # Then why?
-Personally, I cannot think of **streamable-http** transport uses in custom server, I mean sure if you have a dedicated that never goes offline or
-if you want to share your "custom server" with the world so they can just fetch using internet.
+**Centralized Tools for Teams** : When you going to work in big teams you don't everyone to install a database-cleaning tool locally via stdio.Instead your company may host one MCP server on an internal server.
+**Cross Plateform** : `stdio` requires the client to be on the same machine as the server, not so good where as `streamable-http` allows a mobile app that you can communicate via web.
+
+
 
 # Code
 
