@@ -60,10 +60,13 @@ Use session :
 Here we're using `call_tool` to invoke *specific* tool inside the MCP server and the name of the
 tool is **Validate_tool**, where arguments={} refers to empty dictionary of arguments passed because no paramters or any value
 needed for this tool. We storing the responsed from the tool in the `result` variable.
+
 # Note
 The LLM doesn't actually "see" `validate_tool`'s response during its reasoning. The agent uses
 tools from `get_tools()` to answer the question. The `session.call_tools()` call happen after the agent completes.
 It's a manual invocation. 
 
 Check the `strurctured_mcp.py` for server script.
-          
+
+# Core lesson:
+ MCP lets you give LLMs structured tool capabilities while also allowing you to leverage those same tools programmatically. You're not choosing one or the other—you can do both in the same flow.
