@@ -2,9 +2,10 @@ from langchain.agents import create_agent
 from langchain.agents.middleware import HumanInTheLoopMiddleware
 from langgraph.checkpoint.memory import InMemorySaver
 from langchain_openai import ChatOpenAI
+from dotenv import load_dotenv
 import os
 
-os.environ["GROQ_API_KEY"] =  
+load_dotenv()
 
 llm = ChatOpenAI(
     model = "openai/gpt-oss-20b",
