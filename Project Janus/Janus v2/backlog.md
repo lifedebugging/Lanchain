@@ -8,4 +8,4 @@ In Janus v2 I addressed following drawbacks:
 1. **Use of agents** : I isntantly realized *agents* are holy grail of everything of everything that will happen in future Janus, from tool integration to memory systems. Without agents Janus was incomplete.
 2. **Structured output** : Instead of printing raw llm output, I used sturctured output method like printing very last message from agent and printing it's content.
 
-================================================ END ==========================================================
+==================== END =======================
