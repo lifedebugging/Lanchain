@@ -43,8 +43,9 @@
 
 A Document object with two things:
 
-          Field                    What it holds page_content The actual text 
-          metadata                  Where it came from (source, page, etc.)
+          Field                    What it holds
+          page_content             The actual text 
+          metadata                 Where it came from (source, page, etc.)
 
 # The flow so far :
 
