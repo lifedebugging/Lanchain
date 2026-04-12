@@ -12,7 +12,7 @@ Last_name: Moss
 
 lazy_load is a generator used for streaming document lazily or large datasets, for production.
 
-# What happens when you call `lazy_load()?`
+# What happens when you call `lazy_load()`?
 
 `print(loader.lazy_load())` <- This will print the generator object.
 
