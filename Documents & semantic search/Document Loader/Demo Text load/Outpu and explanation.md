@@ -28,23 +28,25 @@
 
 # How it works:
 
-    To create sample data : We write a text file to ./data/ai_basics.txt
-    Initialize TextLoader : Pass the file path to the loader.
-    Load : Call loader.load() to read the file.
-    result : Returns a list of Document objects.
+1. To create sample data : We write a text file to `./data/ai_basics.txt`
+2. Initialize TextLoader : Pass the file path to the loader.
+3. Load : Call `loader.load()` to read the file.
+4. result : Returns a list of Document objects.
 
 # Points to note:
 
-    TextLoader reads text files and handles file I/O.
-    Return list of Document objects (even for single files, for consistency)
-    Meta data automatically includes the source file path.
+1. TextLoader reads text files and handles file I/O.
+2. Return list of Document objects (even for single files, for consistency)
+3. Meta data automatically includes the source file path.
 
 # What comes out?
 
 A Document object with two things:
 
-Field What it holds page_content The actual text metadata Where it came from (source, page, etc.)
-The flow so far :
+          Field                    What it holds page_content The actual text 
+          metadata                  Where it came from (source, page, etc.)
+
+# The flow so far :
 
        your_file.txt
              ↓
@@ -56,5 +58,5 @@ The flow so far :
     
 # mistakes to avoid :
 
-    1. from langchain_community.document_loader❌ - it should be .document_loaders ✅
-    2. langchain_community module not found - python -m pip install langchain_community
+1. from langchain_community.document_loader❌ - it should be .document_loaders ✅
+2. langchain_community module not found - python -m pip install langchain_community
