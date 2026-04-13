@@ -17,7 +17,7 @@ Splitting text work in few steps:
     print(f"Original text length : {len(long_document)} characters\n")
     
     ```
-    Ran into error:
+    Here I ran into an error explained below:
 
    My sample_text.txt contain 10 chapters packed with:
    1. Classic Lorem Ipsum (multiple rounds)
@@ -48,9 +48,9 @@ Splitting text work in few steps:
     )
     ```
     **Parameters** set above for `RecursiveCharacterSplitter`:
-   1. `chunk_size:` : It's a **target**,
+   1. `chunk_size:` : It's a **target**.
       
-      it says - *Try your best to keep chunks under 200, but don't cut a word in half just to obey the limit*
+      It says - *Try your best to keep chunks under 200, but don't cut a word in half just to obey the limit*
       
    2. `chunk_overlap:` size `30` in my script means *the last 30 characters of chunk 1 repeat at the start of chunk 2*
    3. `length_function:` This is a interesting one, to understand what is `length_function` first lets' know:
@@ -103,12 +103,40 @@ Rest is I m just printing each chunk using `for` loop and printing final observa
    
   
       
-  
+# Note :
+When you convert the document into **chunks** :
+
+The **chunks** becomes a **list of Documents**, not a single Document.
+
+Notice how we did : ``text = text_splitter.create_documents([long_document])``
+
+Here, `text` is a **list of Documents**.
+
+```
+text = text_splitter.create_documents([long_document])
+# text = [Document(...), Document(...), Document(...), ...]
+#          ^ index 0       ^ index 1       ^ index 2
+```
       
-  
-      
-      
-  
+**Error** : I tried to print `len(text.page_content)` and the error appeared ``AttributeError: 'list' object has no attribute 'page_content'``
+
+Solution : You can't call `.page_content` on the whole list - you have to **get inside it first**:
+
+```
+# ❌ This fails — asking the list, not a document
+text.page_content
+
+# ✅ This works — pick one document first
+text[0].page_content   # first chunk
+text[1].page_content   # second chunk
+
+# ✅ Or loop through all
+for doc in text:
+    print(doc.page_content)
+```
+We did the third one.
+
+
       
 
       
