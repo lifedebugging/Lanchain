@@ -1,4 +1,5 @@
 # working of RecursiveCharacterTextSplitter
+Note : The working is explained using `text_splitting.py`
 
 Splitting text work in few steps:
 
