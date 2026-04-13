@@ -137,7 +137,9 @@ for doc in text:
 We did the third one.
 
 
-      
+# Splitting text from languages without word boundaries  
+
+Some writing systems do not have word boundaries, for example Chinese, Japanese, and Thai. Just like `Multilingual` chapter in my 
 
       
    
