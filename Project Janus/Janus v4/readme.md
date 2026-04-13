@@ -7,3 +7,5 @@ Structured YAML prompts
 RAG integration
 
 Better error handling
+
+Updated date of Janus v4 launch : 19 april
