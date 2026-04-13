@@ -259,11 +259,4 @@ This document contains: chapters, tables, multilingual characters, special
 symbols, numbers, poetry, fake JSON, pangrams, vocabulary words, and a generous
 serving of Lorem Ipsum.
 
-We hope it served its purpose admirably.
-
-                              ~ fin ~
-
-================================================================================
-                    END OF FILE — Total lines: approximately 230
-                     Generated for sample/testing purposes only.
-================================================================================
+note : created using ai.
