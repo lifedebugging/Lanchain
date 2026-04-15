@@ -18,4 +18,6 @@ Remember how Ai answers:
 "**According to example.md**" that's metdata talking.
 
 
+# metadata and tags to traces
+[doc.langsmith]('https://docs.langchain.com/langsmith/add-metadata-tags')
 
