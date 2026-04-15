@@ -15,9 +15,10 @@ metdata is how agents know *where* an answer came from (**the source**). That ma
 
 Remember how Ai answers:
 
-"**According to example.md**" that's metdata talking.
+"**According to example.md**" - that's metdata talking.
 
 
 # metadata and tags to traces
-[doc.langsmith]('https://docs.langchain.com/langsmith/add-metadata-tags')
+
+['doc.langsmith']('https://docs.langchain.com/langsmith/add-metadata-tags')
 
