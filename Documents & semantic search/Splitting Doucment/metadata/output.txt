@@ -1,0 +1,159 @@
+Number of docs 3
+Document 1
+----------------------------------------------------------------------
+content: LangChain is a framework for building AI applications. It provides abstractions
+...
+
+Metadata:
+{
+  "source": "langchain-intro.md",
+  "category": "tutorial",
+  "difficulty": "beginner",
+  "date": "2024-01-15",
+  "author": "Tech Team",
+  "tags": [
+    "langchain",
+    "python",
+    "ai"
+  ]
+}
+
+
+======================================================================
+
+ Splitting documents (meta data is preserver):
+
+split 3 documents into 9
+chunk 1
+content : LangChain is a framework for building AI applications. It provides abstractions
+Source : langchain-intro.md
+category : tutorial
+Tags : ['langchain', 'python', 'ai']
+
+chunk 2
+content : for working with language models, vector stores, and chains. The framework supports
+Source : langchain-intro.md
+category : tutorial
+Tags : ['langchain', 'python', 'ai']
+
+chunk 3
+content : multiple LLM providers including OpenAI, Anthropic, and Azure.
+Source : langchain-intro.md
+category : tutorial
+Tags : ['langchain', 'python', 'ai']
+
+----------------------------------------------------------------------
+
+ Filtering by metadata
+Beginner documents : 1
+ -langchain-intro.md
+
+ Documents tagged 'ai' : 1
+ -langchain-intro.md
+
+ Metadata is essentail for oranizing and filtering documents
+Document 2
+----------------------------------------------------------------------
+content: RAG (Retrieval Augmented Generation) systems combine document retrieval with
+lan...
+
+Metadata:
+{
+  "source": "rag-explained.md",
+  "category": "concept",
+  "difficulty": "intermediate",
+  "date": "2024-02-20",
+  "author": "AI Research Team",
+  "tags": [
+    "rag",
+    "retrieval",
+    "llm"
+  ]
+}
+
+
+======================================================================
+
+ Splitting documents (meta data is preserver):
+
+split 3 documents into 9
+chunk 1
+content : LangChain is a framework for building AI applications. It provides abstractions
+Source : langchain-intro.md
+category : tutorial
+Tags : ['langchain', 'python', 'ai']
+
+chunk 2
+content : for working with language models, vector stores, and chains. The framework supports
+Source : langchain-intro.md
+category : tutorial
+Tags : ['langchain', 'python', 'ai']
+
+chunk 3
+content : multiple LLM providers including OpenAI, Anthropic, and Azure.
+Source : langchain-intro.md
+category : tutorial
+Tags : ['langchain', 'python', 'ai']
+
+----------------------------------------------------------------------
+
+ Filtering by metadata
+Beginner documents : 1
+ -langchain-intro.md
+
+ Documents tagged 'ai' : 1
+ -langchain-intro.md
+
+ Metadata is essentail for oranizing and filtering documents
+Document 3
+----------------------------------------------------------------------
+content: Vector databases store embeddings and enable semantic search. Unlike traditional...
+
+Metadata:
+{
+  "source": "vector-db-guide.md",
+  "category": "infrastructure",
+  "difficulty": "intermediate",
+  "date": "2024-03-10",
+  "author": "Data Team",
+  "tags": [
+    "vectors",
+    "embeddings",
+    "database"
+  ]
+}
+
+
+======================================================================
+
+ Splitting documents (meta data is preserver):
+
+split 3 documents into 9
+chunk 1
+content : LangChain is a framework for building AI applications. It provides abstractions
+Source : langchain-intro.md
+category : tutorial
+Tags : ['langchain', 'python', 'ai']
+
+chunk 2
+content : for working with language models, vector stores, and chains. The framework supports
+Source : langchain-intro.md
+category : tutorial
+Tags : ['langchain', 'python', 'ai']
+
+chunk 3
+content : multiple LLM providers including OpenAI, Anthropic, and Azure.
+Source : langchain-intro.md
+category : tutorial
+Tags : ['langchain', 'python', 'ai']
+
+----------------------------------------------------------------------
+
+ Filtering by metadata
+Beginner documents : 1
+ -langchain-intro.md
+
+ Documents tagged 'ai' : 1
+ -langchain-intro.md
+
+ Metadata is essentail for oranizing and filtering documents
