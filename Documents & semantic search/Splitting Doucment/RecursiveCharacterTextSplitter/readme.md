@@ -138,7 +138,7 @@ We did the third one.
 
 # Splitting text from languages without word boundaries  
 
-Some writing systems do not have word boundaries, for example Chinese, Japanese, and Thai. Just like `Multilingual` chapter in my [`sample_text.txt](sample_text.txt).
+Some writing systems do not have word boundaries, for example Chinese, Japanese, and Thai. Just like `Multilingual` chapter in my [sample_text.txt](sample_text.txt).
 
 Splitting text with the default separator list of ["\n\n", "\n", " ", ""] can cause words to be split between chunks. To keep words together, you can override the list of separators to include additional punctuation:
 
@@ -146,7 +146,7 @@ Splitting text with the default separator list of ["\n\n", "\n", " ", ""] can ca
 2. Add Zero-width space used in Thai, Myanmar, Kmer, and Japanese.
 3. Add ASCII comma “,”, Unicode fullwidth comma “，”, and Unicode ideographic comma “、”
 
-
+['seperators.py']('seperators.py') 
       
    
     
