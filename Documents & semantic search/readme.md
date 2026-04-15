@@ -47,3 +47,19 @@ Returns the photosynthesis section (perfect match!)
 
 
 IN one sentence : Convert everything to meaning, store it on a map, then navigate that map with your question.
+
+# Current progress
+```
+  TextLoader
+     ↓
+ Document(page_content, metadata)
+     ↓
+  RecursiveCharacterTextSplitter
+     ↓
+  metadata
+     ↓
+  embedding   ← here
+     ↓
+  semanti search
+
+```
