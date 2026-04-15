@@ -20,5 +20,5 @@ Remember how Ai answers:
 
 # metadata and tags to traces
 
-['doc.langsmith']('https://docs.langchain.com/langsmith/add-metadata-tags')
+[doc.langsmith](https://docs.langchain.com/langsmith/add-metadata-tags)
 
