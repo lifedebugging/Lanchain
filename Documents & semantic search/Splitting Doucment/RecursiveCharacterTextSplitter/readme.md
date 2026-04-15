@@ -146,7 +146,7 @@ Splitting text with the default separator list of ["\n\n", "\n", " ", ""] can ca
 2. Add Zero-width space used in Thai, Myanmar, Kmer, and Japanese.
 3. Add ASCII comma “,”, Unicode fullwidth comma “，”, and Unicode ideographic comma “、”
 
-['seperators.py']('seperators.py') 
+[seperators.py]('seperators.py') 
       
    
     
