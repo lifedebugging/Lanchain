@@ -1,4 +1,4 @@
-# Explanation of ['metadata.py']('metadata.py')
+# Explanation of [metadata.py](metadata.py)
 
 **Use cases of Document and json imports**
 
