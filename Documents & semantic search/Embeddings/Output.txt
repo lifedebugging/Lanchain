@@ -1,0 +1,46 @@
+Loading weights: 100%
+ 103/103 [00:00<00:00, 1291.96it/s]
+
+BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+
+Basic embeddings examples
+
+Creating embeddings for texts...
+
+ Created 4 embeddings
+   Each embedding has 384 dimensions
+
+First embedding (first 10 values):
+[-0.06184077635407448, -0.03635323792695999, 0.06468942016363144, -0.05605184659361839, 0.019868560135364532, -0.010997550562024117, -0.011523132212460041, 0.08733796328306198, 0.08023679256439209, -0.0066132210195064545]
+End of first embedding
+
+Similarity Comparisons:
+
+LangChain vs LangChain (similar meaning):
+   Score: 0.9064
+   Texts: "LangChain makes building AI apps easier" vs "LangChain simplifies AI application development"
+
+LangChain vs Pizza (different topics):
+   Score: -0.0202
+   Texts: "LangChain makes building AI apps easier" vs "I love eating pizza for dinner"
+
+LangChain vs Weather (different topics):
+   Score: -0.1025
+   Texts: "LangChain makes building AI apps easier" vs "The weather is sunny today"
+
+Pizza vs Weather (both different from LangChain):
+   Score: 0.0708
+   Texts: "I love eating pizza for dinner" vs "The weather is sunny today"
+
+================================================================================
+
+ Key Insights:
+   - Similar meanings → High similarity scores (>0.8)
+   - Different topics → Low similarity scores (<0.5)
+   - Embeddings capture semantic meaning, not just keywords!
