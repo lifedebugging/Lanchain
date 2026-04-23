@@ -9,6 +9,6 @@ In very simple terms It's a sort of a storing mechanism an database specifically
 
 <img width="588" height="144" alt="image" src="https://github.com/user-attachments/assets/b993d55c-da02-45f0-8dc7-66cfd210d438" />
 
-*reference* : ['langchain docs']('https://docs.langchain.com/oss/python/integrations/vectorstores')
+*reference* : [langchain docs](https://docs.langchain.com/oss/python/integrations/vectorstores)
 
 # In
