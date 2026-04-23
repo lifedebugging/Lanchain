@@ -1,0 +1,80 @@
+Loading weights: 100%
+ 103/103 [00:00<00:00, 2734.05it/s]
+
+BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+
+Vector store and semantic search
+
+Creating vector store with 13267 documents. 
+
+ Vector store created successfully
+
+--------------------------------------------------------------------------------
+
+ query : Information about AI
+
+   Score: 0.1857 🔴 Low
+   Content: This document contains: chapters, tables, multilingual chara...
+   metadata: {}
+
+   Score: 0.1695 🔴 Low
+   Content: Sed ut perspiciatis unde omnis iste natus error sit voluptat...
+   metadata: {}
+
+--------------------------------------------------------------------------------
+
+ query : How to greet in multi language
+
+   Score: 0.5181 🔴 Low
+   Content: Hello, World! (English)
+Hallo, Wereld! (Dutch / Nederlands)
+...
+   metadata: {}
+
+   Score: 0.4823 🔴 Low
+   Content: Olá, Mundo! (Portuguese / Português)
+Hallo, Welt! (German / ...
+   metadata: {}
+
+--------------------------------------------------------------------------------
+
+ query : how to create sample API response
+
+   Score: 0.6428 🟡 Medium
+   Content: Sample API response body (totally fake):
+{
+  "status": "succ...
+   metadata: {}
+
+   Score: 0.5276 🔴 Low
+   Content: },
+    "tags": ["sample", "placeholder", "test", "demo"]
+  }...
+   metadata: {}
+
+--------------------------------------------------------------------------------
+
+ query : most useful information available
+
+   Score: 0.2574 🔴 Low
+   Content: ────────────────────────────────────────────────────────────...
+   metadata: {}
+
+   Score: 0.2558 🔴 Low
+   Content: This document contains: chapters, tables, multilingual chara...
+   metadata: {}
+
+--------------------------------------------------------------------------------
+
+================================================================================
+
+ key insights
+   - Scores help filter out irrelevant results
+   - Higher scores indicate stronger semantic similarity
+   - Set thresholds based on your use case (e.g., >0.7 for relevance)
