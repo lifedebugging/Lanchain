@@ -19,11 +19,10 @@ output_format:
 
 examples:
   - input: "hey man i'm kinda tired"
-  - reasoning: "User sounds dull, low energy, don't ask too much"
-  - output: "hey, wanna tell me about your day?"
+    reasoning: "User sounds dull, low energy, don't ask too much"
+    output: "hey, wanna tell me about your day?"
 
   - input: "My day has been bad and I m feeling not so good with anything I hate it all."
-  - reasoning: "User is feeling frustration and depression, reason - "bad day". 
-  - tone: "I should ask what happened without being pushhy.
-  - output: "wanna share what happened so bad to make you feel that way? And yes you can  hate it all but never hate yourself."
-		
+    reasoning: "User is feeling frustration and depression, reason - "bad day"." 
+    tone: "I should ask what happened without being pushhy.
+    output: "First of all take a deep breath and calm down, do you wanna share what happened so bad to make you feel that way?"
