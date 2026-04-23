@@ -1,0 +1,96 @@
+Loading weights: 100%
+ 103/103 [00:00<00:00, 2921.38it/s]
+
+BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+
+Vector store and semantic search
+
+Creating vector store with 13267 documents. 
+
+ Vector store created successfully
+
+--------------------------------------------------------------------------------
+
+ search: 'Information about AI' (top 2 results)
+
+ 1. This document contains: chapters, tables, multilingual characters, special
+symbols, numbers, poetry, fake JSON, pangrams, vocabulary words, and a generous
+serving of Lorem Ipsum.
+  Category: {}
+
+ 2. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+  Category: {}
+
+--------------------------------------------------------------------------------
+
+ search: 'How to greet in multi language' (top 2 results)
+
+ 1. Hello, World! (English)
+Hallo, Wereld! (Dutch / Nederlands)
+Bonjour, le Monde! (French / Français)
+Hola, Mundo! (Spanish / Español)
+Ciao, Mondo! (Italian / Italiano)
+  Category: {}
+
+ 2. Olá, Mundo! (Portuguese / Português)
+Hallo, Welt! (German / Deutsch)
+Привет, Мир! (Russian / Русский)
+مرحبا يا عالم (Arabic)
+こんにちは、世界！(Japanese / 日本語)
+你好，世界！(Chinese / 中文)
+안녕하세요, 세계! (Korean / 한국어)
+  Category: {}
+
+--------------------------------------------------------------------------------
+
+ search: 'how to create sample API response' (top 2 results)
+
+ 1. Sample API response body (totally fake):
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "id": "usr_4f8a92b1e0d3c7",
+    "username": "example_user",
+    "email": "user@example.com",
+  Category: {}
+
+ 2. },
+    "tags": ["sample", "placeholder", "test", "demo"]
+  },
+  "meta": {
+    "request_id": "req_9c2e1a0b5d8f",
+    "response_time_ms": 42,
+    "server": "prod-eu-west-3"
+  }
+}
+  Category: {}
+
+--------------------------------------------------------------------------------
+
+ search: 'most useful information available' (top 2 results)
+
+ 1. ────────────────────────────────────────────────────────────────────────────────
+CHAPTER 2: A BRIEF HISTORY OF EVERYTHING (ABRIDGED)
+  Category: {}
+
+ 2. This document contains: chapters, tables, multilingual characters, special
+symbols, numbers, poetry, fake JSON, pangrams, vocabulary words, and a generous
+serving of Lorem Ipsum.
+  Category: {}
+
+--------------------------------------------------------------------------------
+
+================================================================================
+
+ key insights
+ - Vectore sotres enable fast similarity search over documents
+ - Semantic search finds relevant content even without exact keyword matches
+ - Metdata helps categorize and filter results
