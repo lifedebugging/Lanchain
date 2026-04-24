@@ -31,3 +31,7 @@ I changed the query and asked("tell me about short peom")
 and I got the [output](output.txt) as final answer and that confirmed that RAG is working, The poem is fake, the LLM couldn't know it from training data and it retrieved and returned it correctly.
 
 Hence, `input`, `instruction`, `context` matters a lot in RAG.
+
+# Correction
+
+the pangrams were eventually retrieved correctly at k=20. The real lesson is that pangrams were a bad test case because the LLM already knows them from training data. The poem proved RAG was working because the LLM had no way to know it.
