@@ -1,0 +1,26 @@
+Loading weights: 100%
+ 103/103 [00:00<00:00, 2779.56it/s]
+
+BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+
+Vector store and semantic search
+
+Creating vector store with 13267 documents. 
+
+ Vector store created successfully
+
+--------------------------------------------------------------------------------
+
+['────────────────────────────────────────────────────────────────────────────────\nCHAPTER 6: A SHORT POEM\n────────────────────────────────────────────────────────────────────────────────\n\nOde to the Sample Text\n\nOh, noble placeholder, filler of space,\nYou stand in for content with dignified grace.\nNo meaning you carry, no story you tell,\nYet every designer knows you so well.', 'Serendipity — the occurrence of pleasant surprises by chance.\nEphemeral — lasting for a very short time; transitory.\nMellifluous — sweet or musical; pleasant to hear.\nPetrichor — the smell of earth after rain.\nSonder — the realization that each passerby has a life as vivid as your own.\nHiraeth — a deep longing for home that may never have existed.\nSolitude — the state of being alone without being lonely.\nLuminescence — emission of light by a substance not resulting from heat.', "• The quick brown fox jumps over the lazy dog.\n  • Pack my box with five dozen liquor jugs.\n  • How vexingly quick daft zebras jump!\n  • The five boxing wizards jump quickly.\n  • Sphinx of black quartz, judge my vow.\n  • Waltz, bad nymph, for quick jigs vex.\n  • Jackdaws love my big sphinx of quartz.\n  • Mr. Jock, TV quiz PhD, bags few lynx.\n  • Blowzy red vixens fight for a quick jump.\n  • Glum Schwartzkopf vex'd by NJ IQ.\n  • Cwm fjord-bank glyphs vext quiz.", '────────────────────────────────────────────────────────────────────────────────\nCHAPTER 10: CLOSING REMARKS\n────────────────────────────────────────────────────────────────────────────────\n\nCongratulations. You have reached the end of this sample text file.']
+Final result: /n**Ode to the Sample Text**
+
+Oh, noble placeholder, filler of space,  
+You stand in for content with dignified grace.  
+No meaning you carry, no story you tell,  
+Yet every designer knows you so well.
