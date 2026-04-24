@@ -1,0 +1,35 @@
+Loading weights: 100%
+ 103/103 [00:00<00:00, 2567.02it/s]
+
+BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+
+ Batch Embeddings
+ 
+ method 1 : good ol'batch embedding with embed_documents()
+ Created 10 embeddings in 0.08s
+ Dimension per embedding: 384
+
+Method 2 : Individual embedding 'string-by-string' with embed_query()
+ Created 10 embeddings in 0.16s
+
+--------------------------------------------------------------------------------
+
+ performance comparison
+   Batch method:      0.08s
+   Individual method: 0.16s
+
+ Batch processing is 2.0x faster
+
+================================================================================
+
+   Key Insights:
+   - Use embed_documents() for multiple texts (batching)
+   - Use embed_query() for single queries
+   - Batching reduces API calls and improves efficiency
+   - Consider rate limits when processing large datasets
