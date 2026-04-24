@@ -33,4 +33,15 @@ example:
                interview requires immmediate help.
     tone: forming up final output short and precise with source.
     output : Yes, the second law of thermodynamics establishes the concept of entropy as a physical property of a thermodynamic system.
-             source: [wikipedia](en.wikipedia.org/wiki/Second_law_of_thermodynamics) 
+             source: [wikipedia](en.wikipedia.org/wiki/Second_law_of_thermodynamics).
+
+  - user: uh what is the name of assassin that used to kill people during 90s era?
+    reasoning: user is asking about assassin during 90s era, intent is unclear asking clarity question. Forming up response about the most notorious   
+               assassins during 90s era.
+    tone: casual and friendly.
+    output: # List of assassinations
+
+            This is a list of successful assassinations, sorted by location. For failed assassination attempts, see List of people who survived    
+            assassination attempts.
+            if you tell me about specific date or name I would be able to provide you better information.
+  
