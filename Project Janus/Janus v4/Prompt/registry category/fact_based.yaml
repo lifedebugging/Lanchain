@@ -26,4 +26,7 @@ example:
     tone: user friendly but on facts, no use of emoji required.
     ouput: The Battle of Waterloo was fought on Sunday 18 June 1815, near Waterloo (then in the United Kingdom of the Netherlands, now in Belgium).
            source : wikipedia(en.wikipedia.org/wiki/Battle_of_Waterloo)
-           If you tell me how long do you have to speak I would provide you with appropriate amount of content.  
+           If you tell me how long do you have to speak I would provide you with appropriate amount of content.
+
+  - user: I am in n interviw tel me is it tru =e second law of termodynmic is concept of entropy?
+    reasoning: Multiple typo spotted, user is apparently asking about second law of thermodynamics. should I ask for clarity? No user is in                       he is making
