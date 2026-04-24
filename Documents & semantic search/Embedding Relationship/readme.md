@@ -1,5 +1,4 @@
 # Embedding Relationship
-
 **what is Embedding relationship**?
 
 The relationship between the embedded values in a given vector store it's about how close (similar) and  far(distinct) the meanings are.
@@ -9,15 +8,14 @@ The code shows why ` Puppy - Dog + Cat = Kitten` works mathematically.
 To undersatand how we have to answer **what is the subtraction actually doing to the vector**?
 
 **Answer**: Dog and Puppy are related by one thing - age/maturity. When you subtract `Dog` from `Puppy`, you're isolating that realationship. You're
-left with a vector that roughly means "youngoness" or "the young version of"
+left with a vector that roughly means "youngness" or "the young version of"
 
 Then you add that to `Cat`. You get the yougness of the Cat.
 
 # Insights
-That shows the embedding space captures realtionships as directions. Substraction isolates a relationship, addition applies it somwhere else.
+That shows the embedding space captures realtionships as directions. Subtraction isolates a relationship, addition applies it somwhere else.
 
 # Key observation
-
 The [code](embed_relation.py) uses `zip` version for calculating cosine product. 
 
 However, I prefer `np.dot` with numpy.
@@ -34,7 +32,6 @@ However, I prefer `np.dot` with numpy.
    ```
    
 Where, `zip` is manual, pure Python, slower.
-
 
 # Note
 This exercise exists to show you *why* vector stores work- the math underneath.
