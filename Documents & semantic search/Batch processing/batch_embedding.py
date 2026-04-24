@@ -60,7 +60,7 @@ def main():
 
 
     print("\n" + "=" * 80)
-    print("\n💡 Key Insights:")
+    print("\n   Key Insights:")
     print("   - Use embed_documents() for multiple texts (batching)")
     print("   - Use embed_query() for single queries")
     print("   - Batching reduces API calls and improves efficiency")
