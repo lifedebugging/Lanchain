@@ -21,7 +21,7 @@ For me I printed the chunks, compared the output to my [sample](sample_text.txt)
 
 When I used the query("Give me the output of pangram setences")
 
-I was getting this [pngram output](previous_ouput.txt) I blamed the model, I thought the retirever isn't fetching enough amount of right chunks.
+I was getting this [pangram output](previous_ouput.txt) I blamed the model, I thought the retirever isn't fetching enough amount of right chunks.
 So, I **increased** the **chunk_size** and **overlap** as well.
 
 However It still wasn't getting the output from the material.
