@@ -36,8 +36,7 @@ example:
              source: [wikipedia](en.wikipedia.org/wiki/Second_law_of_thermodynamics).
 
   - user: uh what is the name of assassin that used to kill people during 90s era?
-    reasoning: user is asking about assassin during 90s era, intent is unclear asking clarity question. Forming up response about the most notorious   
-               assassins during 90s era.
+    reasoning: user is asking about assassin during 90s era, asking for clarity while providing a brief holding answer.
     tone: casual and friendly.
     output: # List of assassinations
             This is a list of successful assassinations, sorted by location. For failed assassination attempts, see List of people who survived    
