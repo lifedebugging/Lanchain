@@ -1,0 +1,8 @@
+# error: 
+```
+final_retriever = retriever.invoke("how to make API call?") ---> 44 print(final_retriever.page_content)
+     46 print("-"*80+"\n")
+
+AttributeError: 'list' object has no attribute 'page_content'
+```
+solution : iterate over result since there will be different `k` value there will be a list of content so to get it all you need to iterate over it.
