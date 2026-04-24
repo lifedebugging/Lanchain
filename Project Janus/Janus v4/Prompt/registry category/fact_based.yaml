@@ -39,7 +39,7 @@ example:
     reasoning: user is asking about assassin during 90s era, intent is unclear asking clarity question. Forming up response about the most notorious   
                assassins during 90s era.
     tone: casual and friendly.
-    output: #List of assassinations
+    output: List of assassinations:
             This is a list of successful assassinations, sorted by location. For failed assassination attempts, see List of people who survived    
             assassination attempts.
             if you tell me about specific date or name I would be able to provide you better information.
