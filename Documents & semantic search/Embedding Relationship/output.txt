@@ -1,0 +1,46 @@
+🔬 Embedding Relationships: Vector Math Demo
+
+This demonstrates how embeddings capture semantic relationships
+that can be manipulated mathematically.
+
+======================================================================
+
+🐶 Example 1: Animal Life Stages
+──────────────────────────────────────────────────────────────────────
+
+Testing: Embedding('Puppy') - Embedding('Dog') + Embedding('Cat')
+Expected result: Should be similar to Embedding('Kitten')
+
+Results (higher = more similar):
+   Similarity to 'Kitten': 0.8276 ← Expected winner!
+   Similarity to 'Cat':    0.8182
+   Similarity to 'Dog':    0.4358
+   Similarity to 'Puppy':  0.6837
+
+✅ Success! The vector math correctly identified 'Kitten'!
+
+======================================================================
+
+📚 Example 2: Semantic Similarity Clusters
+──────────────────────────────────────────────────────────────────────
+
+Comparing items across categories:
+
+Within-category similarities (should be high):
+   'Python' vs 'JavaScript':      0.2670
+   'Dog' vs 'Cat':                0.3892
+   'Pizza' vs 'Sushi':            0.3561
+
+Cross-category similarities (should be lower):
+   'Python' vs 'Dog':             0.0974
+   'Python' vs 'Pizza':           0.1767
+   'Dog' vs 'Pizza':              0.0493
+
+======================================================================
+
+💡 Key Insights:
+   - Embeddings encode semantic relationships as vector dimensions
+   - Similar concepts cluster together in vector space
+   - Vector math can reveal analogies (Puppy:Dog :: Kitten:Cat)
+   - This enables powerful semantic reasoning in AI applications
+
