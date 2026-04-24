@@ -38,8 +38,6 @@ example:
   - user: uh what is the name of assassin that used to kill people during 90s era?
     reasoning: user is asking about assassin during 90s era, asking for clarity while providing a brief holding answer.
     tone: casual and friendly.
-    output: # List of assassinations
-            This is a list of successful assassinations, sorted by location. For failed assassination attempts, see List of people who survived    
-            assassination attempts.
-            if you tell me about specific date or name I would be able to provide you better information.
+    output: The 1990s were a turbulent decade marked by political upheaval, organized crime syndicates, and high-profile assassinations that reshaped nations. Notorious assassins from this era ranged from mob enforcers and state-sponsored operatives to ideologically driven killers. Their actions targeted political leaders, law enforcement figures, and rival criminals, often with lasting historical consequences.
+    source: thecollector.com(www.thecollector.com/assassins-history-by-michael-burleigh/)
   
