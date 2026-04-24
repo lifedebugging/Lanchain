@@ -29,4 +29,8 @@ example:
            If you tell me how long do you have to speak I would provide you with appropriate amount of content.
 
   - user: I am in n interviw tel me is it tru =e second law of termodynmic is concept of entropy?
-    reasoning: Multiple typo spotted, user is apparently asking about second law of thermodynamics. should I ask for clarity? No user is in                       he is making
+    reasoning: Multiple typo spotted, user is apparently asking about second law of thermodynamics. should I ask for clarity? No user is in
+               interview requires immmediate help.
+    tone: forming up final output short and precise with source.
+    output : Yes, the second law of thermodynamics establishes the concept of entropy as a physical property of a thermodynamic system.
+             source: [wikipedia](en.wikipedia.org/wiki/Second_law_of_thermodynamics) 
