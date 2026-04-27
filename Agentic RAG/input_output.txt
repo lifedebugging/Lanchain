@@ -1,0 +1,6 @@
+input :   what is the example provided by Watcher et al?
+
+output :
+Watcher et al. illustrate their point with a simple loan‑approval scenario: an applicant is denied a loan because his annual income is £30,000, 
+yet the same applicant would have been offered the loan if his income had been £45,000. 
+This example is used to show how decisions can hinge on seemingly neutral variables that mask underlying bias.
