@@ -7,6 +7,10 @@ import nltk
 nltk.download("punkt_tab")
 ```
 
+# PyPDFLoader
+
+    pip install PyPDF
+
 # OpenAIEmbeddings 
 
 Head to [plateform.openai.com](https://platform.openai.com/home) to sign up to OpenAI and generate an API key. Once you’ve done this set the OPENAI_API_KEY environment variable:
