@@ -1,0 +1,11 @@
+input:
+
+ explain the adoption of AI in the management of urban mobility systems brings different sets of benefits for private stakeholders i need document sepcific answer.
+
+output:
+
+The material notes that when AI is introduced into urban‑mobility management, private actors—both individual users and commercial firms—receive a distinct set of advantages.  
+
+For private companies, AI‑driven tools such as intelligent routing, on‑demand sharing applications and predictive models that exploit users’ location data enable more efficient service provision and open new revenue streams. By processing large volumes of personal and sensor data, these firms can offer highly personalised travel options, bundle different transport modes on a single platform, and improve key performance metrics such as travel time, comfort and safety. This, in turn, strengthens their competitive position and profitability while meeting the growing demand for seamless, user‑centred mobility experiences.  
+
+For private citizens, the same AI capabilities translate into faster, more reliable journeys, better access to multimodal options and the possibility of tailoring trips to individual preferences—benefits that increase the perceived value of the services offered by private mobility providers.
