@@ -1,6 +1,6 @@
 import os 
-import getpass
 import nltk
+import asyncio
 
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
