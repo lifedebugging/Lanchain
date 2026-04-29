@@ -1,0 +1,8 @@
+BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:   can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+The example illustrates a simple loan‑approval scenario: a person who earns £30,000 a year is turned down for a loan, whereas someone with an annual income of £45,000 would be granted the loan. It’s used to show how a seemingly neutral factor (income) can lead to different outcomes and how hidden correlations with sensitive attributes can produce biased decisions.
