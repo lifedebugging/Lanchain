@@ -2,6 +2,7 @@ import os
 import asyncio
 import uvicorn
 
+
 from pathlib import Path
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain.agents import create_agent
@@ -12,10 +13,8 @@ from error_handler import retry_with_backoff
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.responses import StreamingResponse
-
-
-app = FastAPI()
-
+from langgraph.checkpoint.postgres.aio import AsyncPostgresSaver
+from contextlib import asynccontextmanager
 
 load_dotenv()
 
@@ -33,88 +32,27 @@ smart_llm = ChatOpenAI(
     temperature=0,
 )
 
-
+# structured query
 class Query(BaseModel):
-    query : str
+    query: str
+    thread_id: str 
 
-#api app    
-@app.post("/route")
-async def handler(query:Query):
-    # StreamingResponse for streaming output
-    return StreamingResponse(main(query.query), media_type="text/plain", headers={"X-Accel-Buffering": "no"})
+#Below function called only once 
+fast_agent = None
+smart_agent = None
+checkpointer = None 
 
-    
-def decision_logic(query : str) -> str:
-    query_lower = query.lower()
-    
-    #step 1 - scores for each directory
-    scores = {category : 0 for category in Janus_registry}
-    
-    #step 2 - The multi-keyword scan
-    for category, data in Janus_registry.items():
-        for kw in data["keywords"]:
-            if kw in query_lower:
-                scores[category] += len(kw.split())
-            
-    # Find the maximum score achieved
-    max_score = max(scores.values())
-    
-    if max_score == 0:
-        return {
-            "category": "CASUAL_TALK",
-            "model" : Janus_registry["CASUAL_TALK"]["model"],
-            "tool" : Janus_registry["CASUAL_TALK"]["tool"],
-            }
-    #step 3 - select the winner
-    winners = []
-    for category, score in scores.items():
-        if score == max_score:
-            winners.append(category)
-        
-    best_category = winners[0]
-    
-    for category in winners:
-        if Janus_registry[category]["priority"] > Janus_registry[best_category]["priority"]:
-            best_category = category
-            
-    return {
-        "category": best_category,
-        "model" : Janus_registry[best_category]["model"],
-        "tool" : Janus_registry[best_category]["tool"],     
-    }
-
-async def main(query : str) -> any:
-    
-    client = None
-    tools = []
-    for i in range(2):
-        try:
-            client = MultiServerMCPClient({
-                "get_time": {
-                    "transport": "stdio",
-                    "command": "python",
-                    "args": [str(Path("D:/Documents/Project Janus/mcp_tool.py"))],
-                    },
-                "rag_subagent":{
-                    "transport": "http",
-                    "url": "http://localhost:8000/mcp"
-                }
-                })
-                
-        except Exception as e:
-            print("the tool server is currently unavailable")
-            continue
-        break
-    
-    if client:
-         tools = await client.get_tools()
-    else:
-        print("server is running but couldn't fetch the tools, check your server file.")
-     
-        
-    agent_fast = create_agent(fast_llm, 
-                              tools,
-                              system_prompt="""
+@asynccontextmanager
+async def lifespan(app:FastAPI):
+    tools = await tool_call()
+    global fast_agent, smart_agent, checkpointer
+    DB_URI = "postgresql://postgres:postgres@localhost:5432/postgres?sslmode=disable"
+    async with AsyncPostgresSaver.from_conn_string(DB_URI) as checkpointer:
+        await checkpointer.setup()
+        fast_agent = create_agent(fast_llm, 
+                                  tools, 
+                                  checkpointer=checkpointer,
+                                  system_prompt="""
                               Name : 'Janus'
                               Role: You are the most fast and efficient languge model with high accuracy throughput.
                               You're best at analyzing large documents, understanding user intent with emotions and context.
@@ -157,9 +95,11 @@ async def main(query : str) -> any:
                               No spamming of emoji in each conversation
                               
                               """)
-    agent_smart = create_agent(smart_llm,
-                               tools,
-                               system_prompt="""
+    
+        smart_agent = create_agent(smart_llm,
+                                   tools,
+                                   checkpointer=checkpointer,
+                                   system_prompt="""
                                Name: Janus
                                Role: You are high reasoning capability with multi-step reasoning efficient languge model with high accuracy throughput.
                                You use subagents and tools to answer context specific questions and for multi-step reasoning.
@@ -189,7 +129,92 @@ async def main(query : str) -> any:
                                No spamming of emoji in each conversation
                               
                               """)
+        yield      
+    
+app = FastAPI(lifespan=lifespan)
 
+#handler
+@app.post("/route")
+async def handler(query: Query):
+    # StreamingResponse for streaming output
+    return StreamingResponse(main(query), 
+                            media_type="text/plain", 
+                            )
+
+#decision logic
+def decision_logic(query : Query) -> str:
+    query_lower = query.query.lower()
+    
+    #step 1 - scores for each directory
+    scores = {category : 0 for category in Janus_registry}
+    
+    #step 2 - The multi-keyword scan
+    for category, data in Janus_registry.items():
+        for kw in data["keywords"]:
+            if kw in query_lower:
+                scores[category] += len(kw.split())
+            
+    # Find the maximum score achieved
+    max_score = max(scores.values())
+    
+    if max_score == 0:
+        return {
+            "category": "CASUAL_TALK",
+            "model" : Janus_registry["CASUAL_TALK"]["model"],
+            "tool" : Janus_registry["CASUAL_TALK"]["tool"],
+            }
+    #step 3 - select the winner
+    winners = []
+    for category, score in scores.items():
+        if score == max_score:
+            winners.append(category)
+        
+    best_category = winners[0]
+    
+    for category in winners:
+        if Janus_registry[category]["priority"] > Janus_registry[best_category]["priority"]:
+            best_category = category
+            
+    return {
+        "category": best_category,
+        "model" : Janus_registry[best_category]["model"],
+        "tool" : Janus_registry[best_category]["tool"],     
+    }
+
+#tool call 
+async def tool_call():
+    client = None
+    tools = []
+    for i in range(2):
+        try:
+            client = MultiServerMCPClient({
+                "get_time": {
+                    "transport": "stdio",
+                    "command": "python",
+                    "args": [str(Path("D:/Documents/Project Janus/mcp_tool.py"))],
+                    },
+                "rag_subagent":{
+                    "transport": "http",
+                    "url": "http://localhost:8000/mcp"
+                    }
+                })
+            
+        except Exception as e:
+            print("the tool server is currently unavailable")
+            continue
+        break
+    
+    if client:
+        tools = await client.get_tools()
+        return tools
+    else:
+        print("server is running but couldn't fetch the tools, check your server file.")
+        
+
+async def main(query : Query) -> any:
+    global smart_agent, fast_agent
+    tools = await tool_call()
+    
     decision = decision_logic(query)
 
     print(f"-----[Janus Intelligence Report]----")
@@ -202,7 +227,11 @@ async def main(query : str) -> any:
     if decision["model"] == "Smart":
         print("Model using : llama-3.3-70b-versatile\n")
         async def response_func():
-            async for event in agent_smart.astream_events({"messages" : [("human", query)]}, version="v2"):
+            async for event in smart_agent.astream_events({"messages" : [("human", query.query)]},
+                                                          {"configurable": {"thread_id": query.thread_id}}, 
+                                                          version="v2",
+                                                          ):
+                
                 if event["event"] == "on_chat_model_stream":
                     yield event["data"]["chunk"].text
         
@@ -212,7 +241,11 @@ async def main(query : str) -> any:
     else:
         print("Model using : gpt-os-120b\n")
         async def response_func():
-            async for event in agent_fast.astream_events({"messages" : [("human", query)]}, version="v2"):
+            print(f"fast_agent initialized: {fast_agent}")
+            async for event in fast_agent.astream_events({"messages" : [("human", query.query)]},
+                                                         {"configurable": {"thread_id": query.thread_id}},
+                                                         version="v2"
+                                                         ):
                 if event["event"] == "on_chat_model_stream":
                     yield event["data"]["chunk"].text
                        
@@ -225,5 +258,3 @@ if __name__ == "__main__":
         uvicorn.run("janus_v5:app", host = "127.0.0.1", port = 8001, reload= True)
     except Exception as e:
         print(f"an error occured: {e}") 
-
-
