@@ -1,10 +1,16 @@
 import requests
 import time
+import uuid
+
+thread_id = uuid.uuid4()
+thread_id_Str = str(thread_id)
+print(thread_id_Str)
 
 while True:
     #input
     query = {
-        "query": input("\n prompt: " )
+        "query": input("\n prompt: " ),
+        "thread_id": thread_id_Str
         }
     
     if query["query"] == "exit":
