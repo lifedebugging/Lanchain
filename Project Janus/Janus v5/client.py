@@ -21,7 +21,7 @@ while True:
     for chunk in response.iter_content(decode_unicode=True, chunk_size=None):
         if chunk:
             print(chunk, end="", flush=True)
-            time.sleep(0.05)  # 20ms delay between chunks for natural feel
+            time.sleep(0.03)  # 20ms delay between chunks for natural feel
     
         
             
