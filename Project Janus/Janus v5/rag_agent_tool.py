@@ -3,6 +3,7 @@ import os
 import sys
 import logging
 import asyncio
+from pathlib import Path
 
 # Third-party imports
 from dotenv import load_dotenv
@@ -50,7 +51,7 @@ def Indexing():
     
     # Document loader
     loader = PyPDFLoader(
-        file_path="D:/Downloads/eit-digital-artificial-intelligence-report.pdf",
+        file_path=Path("D:/Downloads/eit-digital-artificial-intelligence-report.pdf"),
         mode="single",
         extract_images=False,
         extraction_mode="layout",
@@ -73,10 +74,10 @@ def Indexing():
     vector_store = Chroma(
         collection_name="example_collection",
         embedding_function=embeddings,
-        persist_directory="D:/Downloads/",
+        persist_directory=Path("D:\Documents\Project x\x v5"),
     )
 
-    if os.path.exists("D:/Downloads/chroma.sqlite3"):
+    if os.path.exists(Path("D:\Documents\Project x\x v5\chroma.sqlite3")):
         ensemble = build_retrievers(vector_store, splitted_documents)
         return ensemble
     else:
