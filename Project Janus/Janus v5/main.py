@@ -2,19 +2,26 @@ import re
 import os
 import math
 import nltk
+import json
+import pytest
 import asyncio
 import uvicorn
 import unicodedata
-
+import numpy as np
 
 from pathlib import Path
 from langchain_mcp_adapters.client import MultiServerMCPClient
+from langchain_community.retrievers import BM25Retriever
+from langchain_core.documents import Document
+from langchain_classic.retrievers import EnsembleRetriever
+from langchain_core.vectorstores import InMemoryVectorStore
 from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
+from langchain_huggingface import HuggingFaceEmbeddings
 from pydantic import BaseModel
 
-from intent_router import INTENT_REGISTRY
-from error_handler import retry_with_backoff
+from intent_registery import INTENT_REGISTRY
+from error_handler import retry_with_backoffs
 
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
@@ -24,9 +31,12 @@ from langgraph.checkpoint.postgres.aio import AsyncPostgresSaver
 
 from fasttext import load_model
 from contextlib import asynccontextmanager
+from sentence_transformers.cross_encoder import CrossEncoder
+from scipy.special import expit as sigmoid
 
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+from sklearn.metrics.pairwise import cosine_similarity
 
 from dotenv import load_dotenv
 
@@ -69,12 +79,36 @@ lang_model = None
 keyword_map = None
 idf = None
 stop_words = None
+# embedding model intialization
+embeddings = None
+#encoding model setup
+encoder_model = None
+#semantic dataset
+semantic_dataset = None
 
+vector_store = None
 
+bm25_retriever = None
+
+embed_retriever = None
+
+ensemble_retriever = None
+
+#filtering function for bm25 preprocess function
+def filtering(query: str):
+    # normalization
+    normalized_uni_query = unicodedata.normalize('NFKC', query)
+    # lower case
+    tokens = word_tokenize(normalized_uni_query.lower())
+    # filter
+    filtered_tokens = [word for word in tokens if word.isalpha() and word not in stop_words]
+
+    return filtered_tokens 
 #lifespan
 @asynccontextmanager
 async def lifespan(app:FastAPI):
-    global gpt, llama, fast_agent,smart_agent, tools, catched_tools, checkpointer, lang_model, keyword_map, idf, stop_words
+    global gpt, llama, fast_agent,smart_agent, tools, catched_tools, checkpointer, lang_model, keyword_map, idf, stop_words, embeddings
+    global encoder_model, semantic_dataset, vector_store, bm25_retriever, embed_retriever, ensemble_retriever
     
     #LLM endpoints
     gpt = ChatOpenAI(
@@ -90,6 +124,18 @@ async def lifespan(app:FastAPI):
     base_url="https://api.groq.com/openai/v1",
     temperature=MODEL_CONFIGS["fast"]["temperature"],
     )
+    
+    #embedding model
+    embeddings = HuggingFaceEmbeddings(
+        model="all-MiniLM-L6-V2"
+    )
+    
+    #encoder model
+    encoder_model = CrossEncoder("cross-encoder/ms-marco-MiniLM-L6-v2")
+    
+    #loading semantic registry dataset
+    with open('D:/Documents/Project x/x v5/janus_semantic_registry_v8.json', 'r', encoding='utf-8') as file:
+        semantic_dataset  = json.load(file)
     
     #tool call
     async def get_tools():
@@ -188,7 +234,7 @@ async def lifespan(app:FastAPI):
                               """)
         
     #loading fasttext langdetect model (requires to load only once)
-    lang_model= load_model("D:/Documents/Project Janus/Janus v5/lid.176.ftz")
+    lang_model= load_model(Path("D:\Documents\Project x\x v5\lid.176.ftz"))
         
     ## keyword router refined
     def build_keyword_map():
@@ -217,7 +263,42 @@ async def lifespan(app:FastAPI):
     
     #stopwords
     stop_words = set(stopwords.words('english'))
-            
+    
+    #document preparation for semantic router
+    page_data = []
+    meta_data = []
+    documents = []
+
+    for item in semantic_dataset:
+        meta_data = item["name"]
+        page_data = " ".join(item["positive_examples"])
+        new_data = Document(
+            page_content= page_data,
+            metadata = {"category": meta_data}
+            )
+        documents.append(new_data)
+    
+    #vector store embeds building
+    vector_store = InMemoryVectorStore.from_documents(
+    documents, 
+    embeddings,
+    )
+    
+    #retriever
+    embed_retriever = vector_store.as_retriever(k=5)
+    
+    #bm25 document building
+    bm25_retriever  = BM25Retriever.from_documents(
+        documents,
+        k = 5,
+        preprocess_func=filtering
+        )
+    
+    ensemble_retriever = EnsembleRetriever(
+        retrievers=[bm25_retriever, embed_retriever],
+        weights=[0.5, 0.5],
+        c=60,
+    )
     yield      
     
 app = FastAPI(lifespan=lifespan)
@@ -230,12 +311,124 @@ async def handler(query: Query):
                             media_type="text/plain", 
                             )
 
-
-#decision logic
-def decision_logic(query : Query) -> str:
-    def predict_language(text,k: int=1):
+def predict_language(text,k: int=1):
         label, prob = lang_model.predict(text, k)
         return list(zip([l.replace("__label__", "") for l in label], prob))
+
+
+# Filtering
+def filtering():
+
+    # normalization
+    normalized_uni_query = unicodedata.normalize('NFKC', query.query)
+    # lower case
+    tokens = word_tokenize(normalized_uni_query.lower())
+    # filter
+    filtered_tokens = [word for word in tokens if word.isalpha() and word not in stop_words]
+
+    return filtered_tokens #list required for counting meaningful words in denominator.
+    
+ #normalization    
+def normalization():
+    stripped_query = query.query.lower().strip()
+    dup_query = re.sub(r'([!?.,;:])\1+', r'\1', stripped_query)
+    normalized_uni_query = unicodedata.normalize('NFKC', dup_query)
+    
+    return normalized_uni_query 
+    
+#keyword searching for intent
+def classify_query(user_query, top_k: int=1)-> list[dict]:
+    """
+    Classify a user query against the intent registry.
+    
+    Args:
+    query: The user query string
+    top_k: Number of top categories to return (default 1 for hard routing)
+    
+    Returns:
+    List of dicts with category, confidence, model, priority, tools.
+    Empty list if no match(fall through to semantic search).
+    """ 
+    user_query = normalized_query
+    
+    #step 1 - scores for each directory
+    scores = {}
+    
+    #step 2 - The multi-keyword scan
+    for category, data in INTENT_REGISTRY.items():
+        matched = [] 
+        score = 0
+        for keyword in data["keywords"]:
+            if re.search(r'\b'  + re.escape(keyword) + r'\b', user_query):
+                weight = len(keyword.split())
+                score += weight
+                matched.append(keyword)
+                    
+        # priority = int(data.get("priority", 5))
+    
+        if len(filtered_token) == 0:
+            return []
+        else:
+            # Find the confidence
+            confidence = sum(idf.get(kw, 0) for kw in matched) / len(filtered_token)        
+            if confidence >= 0.70:
+                scores[category] = {
+                    "category": category,
+                    "confidence": round(min(confidence, 0.99), 2),
+                    "model": data["model"],
+                    "tool": data["tool"],
+                    "priority": data["priority"],
+                    "matched_keywords": matched[:2]
+                }
+            else:
+                pass
+
+    #sort by confidence descending
+    sorted_scores = sorted(scores.values(), key=lambda x: x["confidence"], reverse=True)
+    return sorted_scores[:top_k]
+
+    
+def semantic_intent(query : Query):
+    results = ensemble_retriever.invoke(query.query)
+    normalize_description = {item["name"]: item["description"] for item in semantic_dataset}
+
+    scores = []
+
+    for item in results:
+        last_item = item.metadata['category']
+        lookup = normalize_description[last_item]                    
+        cross_encoder = encoder_model.predict([[query.query, lookup]])
+        scores.append((last_item, cross_encoder))
+    
+    scores.sort(key= lambda x: x[1][0], reverse=True) 
+
+    raw_scores = np.array([s[1][0] for s in scores])
+    names = np.array([s[0] for s in scores])
+    confidence = sigmoid(raw_scores)
+    round_confidence = np.round(confidence, 3)
+    zipped = zip(names, round_confidence)
+    zipper = list(zipped)
+
+
+    winner = []
+
+    normalized_threshold = {item["name"] : item["threshold"] for item in semantic_dataset}
+
+        
+    
+    gap = zipper[0][1] - zipper[1][1]
+    final_item = zipper[0][0]
+    final_lookup = normalized_threshold[final_item]
+    print(gap)
+    print(final_lookup)
+    if zipper[0][1] > final_lookup and gap >= 0.3:
+        winner.append(zipper)
+
+    return winner
+    
+#decision logic
+def decision_logic(query : Query) -> str:
+    
     
     result = predict_language(query.query)
     
@@ -244,84 +437,11 @@ def decision_logic(query : Query) -> str:
     # else:
     #     print("fallback to llm router")
         
-    
-    # Filtering
-    def filtering():
-
-        # normalization
-        normalized_uni_query = unicodedata.normalize('NFKC', query.query)
-        # lower case
-        tokens = word_tokenize(normalized_uni_query.lower())
-        # filter
-        filtered_tokens = [word for word in tokens if word.isalpha() and word not in stop_words]
-    
-        return filtered_tokens #list required for counting meaningful words in denominator.
-    
     filtered_token = filtering()
-        
-    #normalization    
-    def normalization():
-        stripped_query = query.query.lower().strip()
-        dup_query = re.sub(r'([!?.,;:])\1+', r'\1', stripped_query)
-        normalized_uni_query = unicodedata.normalize('NFKC', dup_query)
-        
-        return normalized_uni_query 
-        
+
     normalized_query = normalization()
-        
-        
-    #keyword searching for intent
-    def classify_query(user_query, top_k: int=1)-> list[dict]:
-        """
-        Classify a user query against the intent registry.
-        
-        Args:
-        query: The user query string
-        top_k: Number of top categories to return (default 1 for hard routing)
-        
-        Returns:
-        List of dicts with category, confidence, model, priority, tools.
-        Empty list if no match(fall through to semantic search).
-        """ 
-        user_query = normalized_query
-        
-        #step 1 - scores for each directory
-        scores = {}
-        
-        #step 2 - The multi-keyword scan
-        for category, data in INTENT_REGISTRY.items():
-            matched = [] 
-            score = 0
-            for keyword in data["keywords"]:
-                if re.search(r'\b'  + re.escape(keyword) + r'\b', user_query):
-                    weight = len(keyword.split())
-                    score += weight
-                    matched.append(keyword)
-                       
-            # priority = int(data.get("priority", 5))
-        
-            if len(filtered_token) == 0:
-                return []
-            else:
-                # Find the confidence
-                confidence = sum(idf.get(kw, 0) for kw in matched) / len(filtered_token)        
-                if confidence >= 0.70:
-                    scores[category] = {
-                        "category": category,
-                        "confidence": round(min(confidence, 0.99), 2),
-                        "model": data["model"],
-                        "tool": data["tool"],
-                        "priority": data["priority"],
-                        "matched_keywords": matched[:2]
-                    }
-                else:
-                    pass
     
-        #sort by confidence descending
-        sorted_scores = sorted(scores.values(), key=lambda x: x["confidence"], reverse=True)
-        return sorted_scores[:top_k]
-    
-     #tunnel split for keyword searching and semantic search
+    #tunnel split for keyword searching and semantic search
     if len(normalized_query.split()) <= 10:
         intent = classify_query(query.query)
         
@@ -329,7 +449,7 @@ def decision_logic(query : Query) -> str:
         return {"category": "SEMANTIC", "model": "Fast", "tool": None, "confidence": 0.0}
     
     print(f"intent: {intent}")
-    if intent:
+    if intent:  
         return {
             "category" : intent[0]["category"],
             "confidence" : intent[0]["confidence"],
@@ -337,29 +457,12 @@ def decision_logic(query : Query) -> str:
             "tool": intent[0]["tool"],
             "priority": intent[0]["priority"], 
         }
-        
-    else:
-        return {"category": "SEMANTIC", "model": "Fast", "tool": None, "confidence": 0.0}
-        
-    #step 3 - select the winner
-    # winners = []
-    #for category, score in scores.items():
-     #   if score == max_score:
-      #      winners.append(category)
-        
-    #best_category = winners[0]
     
-    #for category in winners:
-     #   if INTENT_REGISTRY[category]["priority"] > INTENT_REGISTRY[best_category]["priority"]:
-      #      best_category = category
-            
-    #return {
-        #"category": best_category,
-        #"model" : INTENT_REGISTRY[best_category]["model"],
-        #"tool" : INTENT_REGISTRY[best_category]["tool"],     
-    #}
-
-#tool call 
+    else:
+        semantic_result = semantic_intent()
+        
+ 
+#  tool call 
 async def tool_call():
     client = None
     tools = []
