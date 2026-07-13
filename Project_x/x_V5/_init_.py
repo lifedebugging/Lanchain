@@ -28,39 +28,17 @@ MODEL_PATH = MODEL_PATH / "models" / "lid.176.ftz"
 
 class AppStateContext(BaseModel):
     #takes all sorts of datatypes eg. connection pool etc..
-    model_config = ConfigDict(arbitary_types_allowed=True)
+    model_config = ConfigDict(arbitrary_types_allowed=True)
     
-    agent_lookup: dict[str, Any]
-    tools: list[Any]
-    pool: Any #AsyncConnectionPool
-    fast_agent: dict[str, Any]
-    smart_agent:  dict[str, Any]
-    checkpointer: Any #AsyncPostgresSaver
-    lang_model: Any
+    agent_lookup: Any = None
+    tools: Any = None
+    pool: Any = None #AsyncConnectionPool
+    checkpointer: Any = None #AsyncPostgresSaver
+    lang_model: Any = None
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     
-    sys_prompt = ReadOnly()
-    agent_lookup = {}
-    for tier, config in MODEL_MAP.items():
-        model_endpoint = endpoint(config)
-        agent = create_agent(
-            model_endpoint,
-            tools,
-            checkpointer = checkpointer,
-            system_prompt= sys_prompt
-            )
-        agent_lookup[tier] = agent
-        
-    #tool call
-    async def get_tools():
-        if catched_tools is None:
-            catched_tools = await tool_call()
-        return catched_tools
-    
-    tools = await get_tools()
-        
     # db setup for short term memory
     # Create pool once at startup
     print("checkpointer connection pool starting up..")
@@ -78,7 +56,30 @@ async def lifespan(app: FastAPI):
     # async with AsyncPostgresSaver.from_conn_string(DB_URL) as checkpointer:
     #await checkpointer.setup()
 
-
+    #tool call 
+    async def get_tools():
+        cached_tools = await tool_call()
+        return cached_tools
+        
+    tools= await get_tools()
+    
+    sys_prompt = ReadOnly()
+    
+    agent_lookup = {}
+    for tier, config in MODEL_MAP.items():
+        model_endpoint = endpoint(config)
+        
+        raw_prompt_string = sys_prompt.prompt
+        
+        agent = create_agent(
+            model_endpoint,
+            tools,
+            checkpointer = checkpointer,
+            system_prompt= raw_prompt_string,
+            )
+        agent_lookup[tier] = agent
+        
+        
     #loading fasttext langdetect model (requires to load only once)
     lang_model= load_model(str(MODEL_PATH))
     
@@ -88,11 +89,11 @@ async def lifespan(app: FastAPI):
         tools=tools,
         agent_lookup=agent_lookup,
         pool=pool,
-        checkpionter=checkpointer,
+        checkpointer=checkpointer,
     )
     
     # this Yield the context container directly to FastAPI
-    yield 
+    yield {"context": state_container}
     
     print("checkpointer connection shutting down..")
     # lastly safe application shutdown cleanup

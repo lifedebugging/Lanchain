@@ -7,14 +7,14 @@ from pydantic import BaseModel
 # from error_handler import retry_with_backoffs
 from intent_router import normalization, keyword_intent, semantic_intent
 from model_config import log_routing_decision
-from fastapi import FastAPI #Depends
+from fastapi import FastAPI, Depends
 from fastapi.responses import StreamingResponse
 from collections.abc import AsyncIterator
 
 from _init_ import get_ctx, lifespan, AppStateContext
 
 
-from logging_handler import setup_logging, get_logger
+# from logging_handler import setup_logging, get_logger
 
 from dotenv import load_dotenv
 
@@ -30,9 +30,11 @@ app = FastAPI(lifespan=lifespan)
 
 #handler
 @app.post("/route")
-async def handler(query: Query):
+async def handler(query: Query, 
+                  ctx: AppStateContext = Depends(get_ctx),   #telling the router it's dependency
+                  ):
     # StreamingResponse for streaming output
-    return StreamingResponse(main(query), 
+    return StreamingResponse(main(query, ctx), 
                             media_type="text/plain", 
                             )
 
@@ -45,7 +47,7 @@ def predict_language(text: str,k: int=1, ctx: AppStateContext = get_ctx):
 def decision_logic(query : Query,  ctx: AppStateContext) -> str:
     
     
-    result = predict_language(query.query)
+    # result = predict_language(query.query, ctx)
     normalized_query = normalization(query.query)
     keyword_results = keyword_intent(query.query)
     semantic_results = semantic_intent(query.query)
@@ -60,7 +62,7 @@ def decision_logic(query : Query,  ctx: AppStateContext) -> str:
         intent =  keyword_results          #keyword_results[0] if keyword_results else None
         
     else:
-        return {"category": "SEMANTIC", "model": "Fast", "tool": ctx.catched_tools, "confidence": 0.0}
+        return {"category": "SEMANTIC", "model": "Fast", "tool": ctx.tools, "confidence": 0.0}
     
     print(f"intent: {intent}")
     if intent:  
@@ -77,7 +79,7 @@ def decision_logic(query : Query,  ctx: AppStateContext) -> str:
         
  
 async def main(query : Query,  ctx: AppStateContext) -> AsyncIterator[str]:
-    decision = decision_logic(query)
+    decision = decision_logic(query, ctx)
     
     tier = log_routing_decision(decision)
     # for tool in tools:
